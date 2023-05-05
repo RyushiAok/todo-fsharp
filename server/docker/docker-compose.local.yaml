@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  # server:
+  #   container_name: todo-server
+  #   restart: always
+  #   tty: true
+
+  database:
+    container_name: todo-database
+    restart: always
+    tty: true
