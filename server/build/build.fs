@@ -9,6 +9,9 @@ let DOCKER_COMPONSE_LOCAL = $"{DOCKER_FILER_DIR}/docker-compose.local.yaml"
 let DOCKER_COMPOSE_LOCAL_DATABASE =
     $"{DOCKER_FILER_DIR}/docker-compose.local.database.yaml"
 
+let DOCKER_COMPOSE_LOCAL_SERVER =
+    $"{DOCKER_FILER_DIR}/docker-compose.local.server.yaml"
+
 module Command =
     [<Literal>]
     let Default = "Default"
@@ -36,14 +39,14 @@ let initTargets () =
     Target.create Command.Up (fun _ ->
         Shell.AsyncExec(
             "docker",
-            $"compose -f {DOCKER_COMPONSE_LOCAL} -f {DOCKER_COMPOSE_LOCAL_DATABASE} --env-file {ENV} up -d"
+            $"compose -f {DOCKER_COMPONSE_LOCAL} -f {DOCKER_COMPOSE_LOCAL_DATABASE} -f {DOCKER_COMPOSE_LOCAL_SERVER} --env-file {ENV} up -d"
         )
         |> ignore)
 
     Target.create Command.Down (fun _ ->
         Shell.Exec(
             "docker",
-            $"compose -f {DOCKER_COMPONSE_LOCAL} -f {DOCKER_COMPOSE_LOCAL_DATABASE} --env-file {ENV} down --rmi all --volumes --remove-orphans"
+            $"compose -f {DOCKER_COMPONSE_LOCAL} -f {DOCKER_COMPOSE_LOCAL_DATABASE} -f {DOCKER_COMPOSE_LOCAL_SERVER} --env-file {ENV} down --rmi all --volumes --remove-orphans"
         )
         |> ignore)
 
